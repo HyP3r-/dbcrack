@@ -4,7 +4,7 @@ import prober.IProbe;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
-import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorCompletionService;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -14,54 +14,55 @@ import java.util.concurrent.Future;
  */
 public class Scheduler {
 
-    private final int numOfTasks = 20;
+    private final int tasksQueue;
 
-    private Future<TaskResult>[] futures;
+    private final int tasksWorking;
+
+    private final int tasksThreshold;
 
     private Queue<Task> taskQueue;
 
     private Class<? extends IProbe> classOfProber;
 
-    public Scheduler(Class<? extends IProbe> classOfProber) {
+    private ComClient comClient;
+
+    public Scheduler(Class<? extends IProbe> classOfProber, ComClient comClient) {
         this.classOfProber = classOfProber;
         this.taskQueue = new ArrayDeque<>();
-        this.futures = new Future[numOfTasks];
-    }
-
-    public void addTask(Task task) {
-        taskQueue.add(task);
+        this.comClient = comClient;
+        // Limits, could be optimized
+        this.tasksQueue = Runtime.getRuntime().availableProcessors() * 4;
+        this.tasksWorking = Runtime.getRuntime().availableProcessors() * 2;
+        this.tasksThreshold = Runtime.getRuntime().availableProcessors();
     }
 
     public TaskResult start() {
-        ExecutorService executorService = Executors.newWorkStealingPool();
         try {
+            // Init Executor and Service
+            ExecutorService executorService = Executors.newWorkStealingPool();
+            ExecutorCompletionService<TaskResult> executorCompletionService = new ExecutorCompletionService<TaskResult>(executorService);
             IProbe iProbe = classOfProber.newInstance();
-            // TODO: this part should be optimized
+
+            // Prefill Queue and Executor
+            comClient.fillTaskList(taskQueue, tasksQueue);
+            for (int i = 0; i < tasksWorking; i++) {
+                executorCompletionService.submit(new SchedulerTask(iProbe, taskQueue.poll()));
+            }
+
+            // Keep on working and refill
             while (true) {
-                Task task = taskQueue.poll();
-                if (task == null) {
-                    for (int i = 0; i < futures.length; i++) {
-                        if (futures[i] != null && futures[i].isDone() && futures[i].get().getResult()) {
-                            // TODO: we found the hash lol
-                            executorService.shutdown();
-                            return futures[i].get();
-                        }
-                    }
-                    Thread.sleep(10);
-                    continue;
+                Future<TaskResult> take = executorCompletionService.take();
+                comClient.tellServer(take.get());
+                if (take.get().getResult()) {
+                    return take.get();
+                } else {
+                    executorCompletionService.submit(new SchedulerTask(iProbe, taskQueue.poll()));
                 }
-                for (int i = 0; i < futures.length; i++) {
-                    if (futures[i] == null || (futures[i].isDone() && !futures[i].get().getResult())) {
-                        futures[i] = executorService.submit(new SchedulerTask(iProbe, task));
-                        break;
-                    } else if (futures[i].isDone() && futures[i].get().getResult()) {
-                        // TODO: we found the hash lol
-                        executorService.shutdown();
-                        return futures[i].get();
-                    }
+                if (taskQueue.size() == tasksThreshold) {
+                    comClient.fillTaskList(taskQueue, tasksQueue);
                 }
             }
-        } catch (InterruptedException | ExecutionException | InstantiationException | IllegalAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         // TODO return null is shit

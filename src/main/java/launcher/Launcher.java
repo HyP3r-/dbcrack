@@ -21,7 +21,7 @@ public class Launcher {
                     cliController.start(args);
                     break;
                 case "gui":
-
+                    // TODO: put here the GUI
                     break;
             }
         } catch (IOException e) {
