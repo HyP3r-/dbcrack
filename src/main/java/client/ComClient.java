@@ -11,7 +11,7 @@ public class ComClient {
         this.hostname = hostname;
     }
 
-    public void start(){
+    public void start() {
 
     }
 
