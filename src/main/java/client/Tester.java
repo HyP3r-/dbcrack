@@ -14,7 +14,7 @@ public class Tester {
         this.prober = prober;
     }
 
-    public boolean startTest(Task task) throws Exception {
+    public TaskResult startTest(Task task) throws Exception {
         // TODO: this have to optimized lol
         long currentPasswordNumber;
         StringBuilder stringBuilder;
@@ -22,16 +22,16 @@ public class Tester {
             // first generate the password
             currentPasswordNumber = i;
             stringBuilder = new StringBuilder();
-            for (long l = 0; l < currentPasswordNumber; l++) {
-                stringBuilder.append(task.getChars()[((int) (currentPasswordNumber % task.getChars().length))]);
+            while (currentPasswordNumber != 0) {
+                stringBuilder.append(task.getChars()[(int) (currentPasswordNumber % task.getChars().length)]);
+                currentPasswordNumber = currentPasswordNumber / task.getChars().length;
             }
-            currentPasswordNumber = currentPasswordNumber / task.getChars().length;
             // then test the password
             if (prober.probe(stringBuilder.toString(), task.getHashToFind())) {
-                return true;
+                return new TaskResult(true, stringBuilder.toString());
             }
         }
-        return false;
+        return new TaskResult(false);
     }
 
 }

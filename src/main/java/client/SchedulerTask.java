@@ -1,40 +1,26 @@
 package client;
 
 import prober.IProbe;
-import java.util.Queue;
+
+import java.util.concurrent.Callable;
 
 /**
  * Created by fendta on 08.07.14.
  */
-public class SchedulerTask implements Runnable {
+public class SchedulerTask implements Callable<TaskResult> {
 
-    private Class<IProbe> classOfProber;
+    private IProbe iProbe;
 
-    private Queue<Task> taskQueue;
+    private Task task;
 
-    public SchedulerTask(Class<IProbe> classOfProber, Queue<Task> taskQueue) {
-        this.classOfProber = classOfProber;
-        this.taskQueue = taskQueue;
+    public SchedulerTask(IProbe iProbe, Task task) {
+        this.iProbe = iProbe;
+        this.task = task;
     }
 
     @Override
-    public void run() {
-        try {
-            Task task;
-            IProbe iProbe = classOfProber.newInstance();
-            Tester tester = new Tester(iProbe);
-            while (true) {
-                while ((task = taskQueue.peek()) != null) {
-                    Thread.sleep(100);
-                }
-                if (tester.startTest(task)) {
-                    break;
-                }
-            }
-            //
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    public TaskResult call() throws Exception {
+        Tester tester = new Tester(iProbe);
+        return tester.startTest(task);
     }
-
 }
