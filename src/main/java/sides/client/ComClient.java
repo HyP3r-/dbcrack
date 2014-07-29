@@ -1,5 +1,8 @@
 package sides.client;
 
+import attack.task.Task;
+import attack.task.TaskResult;
+
 import java.util.Queue;
 
 /**

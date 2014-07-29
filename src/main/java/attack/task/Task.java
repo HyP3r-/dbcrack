@@ -1,4 +1,4 @@
-package sides.client;
+package attack.task;
 
 /**
  * Created by fendta on 07.07.14.

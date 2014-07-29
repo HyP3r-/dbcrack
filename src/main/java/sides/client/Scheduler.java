@@ -1,6 +1,9 @@
 package sides.client;
 
 import attack.prober.IProbe;
+import attack.task.Task;
+import attack.task.TaskResult;
+import attack.tester.ITester;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -24,9 +27,12 @@ public class Scheduler {
 
     private Class<? extends IProbe> classOfProber;
 
+    private Class<? extends ITester> classOfTester;
+
     private ComClient comClient;
 
-    public Scheduler(Class<? extends IProbe> classOfProber, ComClient comClient) {
+    public Scheduler(Class<? extends ITester> classOfTester, Class<? extends IProbe> classOfProber, ComClient comClient) {
+        this.classOfTester = classOfTester;
         this.classOfProber = classOfProber;
         this.taskQueue = new ArrayDeque<>();
         this.comClient = comClient;
@@ -42,11 +48,12 @@ public class Scheduler {
             ExecutorService executorService = Executors.newWorkStealingPool();
             ExecutorCompletionService<TaskResult> executorCompletionService = new ExecutorCompletionService<TaskResult>(executorService);
             IProbe iProbe = classOfProber.newInstance();
+            ITester iTester = classOfTester.newInstance();
 
             // Prefill Queue and Executor
             comClient.fillTaskList(taskQueue, tasksQueue);
             for (int i = 0; i < tasksWorking; i++) {
-                executorCompletionService.submit(new SchedulerTask(iProbe, taskQueue.poll()));
+                executorCompletionService.submit(new SchedulerTask(iTester, iProbe, taskQueue.poll()));
             }
 
             // Keep on working and refill
@@ -56,7 +63,7 @@ public class Scheduler {
                 if (take.get().getResult()) {
                     return take.get();
                 } else {
-                    executorCompletionService.submit(new SchedulerTask(iProbe, taskQueue.poll()));
+                    executorCompletionService.submit(new SchedulerTask(iTester, iProbe, taskQueue.poll()));
                 }
                 if (taskQueue.size() == tasksThreshold) {
                     comClient.fillTaskList(taskQueue, tasksQueue);

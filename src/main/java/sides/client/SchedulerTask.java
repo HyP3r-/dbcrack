@@ -1,7 +1,9 @@
 package sides.client;
 
 import attack.prober.IProbe;
-import attack.tester.TesterBruteForce;
+import attack.task.Task;
+import attack.task.TaskResult;
+import attack.tester.ITester;
 
 import java.util.concurrent.Callable;
 
@@ -10,18 +12,20 @@ import java.util.concurrent.Callable;
  */
 public class SchedulerTask implements Callable<TaskResult> {
 
-    private IProbe iProbe;
+    private final ITester iTester;
 
-    private Task task;
+    private final IProbe iProbe;
 
-    public SchedulerTask(IProbe iProbe, Task task) {
+    private final Task task;
+
+    public SchedulerTask(ITester iTester, IProbe iProbe, Task task) {
         this.iProbe = iProbe;
         this.task = task;
+        this.iTester = iTester;
     }
 
     @Override
     public TaskResult call() throws Exception {
-        TesterBruteForce testerBruteForce = new TesterBruteForce(iProbe);
-        return testerBruteForce.startTest(task);
+        return iTester.startTest(task, iProbe);
     }
 }

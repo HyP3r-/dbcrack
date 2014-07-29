@@ -1,5 +1,7 @@
 package sides.client;
 
+import attack.task.Task;
+import attack.task.TaskResult;
 import org.junit.Assert;
 import attack.prober.ProbeMD5;
 

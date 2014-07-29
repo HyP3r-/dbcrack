@@ -1,6 +1,6 @@
 package sides.server;
 
-import sides.client.Task;
+import attack.task.Task;
 import attack.prober.IProbe;
 
 /**

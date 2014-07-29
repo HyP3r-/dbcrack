@@ -1,7 +1,7 @@
 package attack.tester;
 
-import sides.client.Task;
-import sides.client.TaskResult;
+import attack.task.Task;
+import attack.task.TaskResult;
 import attack.prober.IProbe;
 
 /**
