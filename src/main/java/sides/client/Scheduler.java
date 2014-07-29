@@ -1,6 +1,6 @@
-package client;
+package sides.client;
 
-import prober.IProbe;
+import attack.prober.IProbe;
 
 import java.util.ArrayDeque;
 import java.util.Queue;

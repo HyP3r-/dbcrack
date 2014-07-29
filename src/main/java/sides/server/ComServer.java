@@ -1,23 +1,26 @@
-package server;
+package sides.server;
 
-import prober.IProbe;
+import sides.client.Task;
+import attack.prober.IProbe;
 
 /**
  * Created by fendta on 28.07.14.
  */
 public class ComServer {
 
-    private int port;
-
     private Class<? extends IProbe> classOfProber;
 
-    private byte[] hash;
+    private Task mainTask;
 
-    public ComServer(String port, String prober, String hash) {
+    private int port;
+
+    public ComServer(String port, String prober, String hash, String chars, String range) {
         try {
             this.port = Integer.parseInt(port);
+            String[] split = range.split("-");
+            mainTask = new Task(Long.parseLong(split[0]), Long.parseLong(split[1]), chars.toCharArray(),
+                    hexStringToByteArray(hash));
             this.classOfProber = (Class<? extends IProbe>) Class.forName(prober);
-            this.hash = hexStringToByteArray(hash);
         } catch (Exception e) {
             e.printStackTrace();
         }

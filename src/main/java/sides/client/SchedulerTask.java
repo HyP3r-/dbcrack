@@ -1,6 +1,7 @@
-package client;
+package sides.client;
 
-import prober.IProbe;
+import attack.prober.IProbe;
+import attack.tester.TesterBruteForce;
 
 import java.util.concurrent.Callable;
 
@@ -20,7 +21,7 @@ public class SchedulerTask implements Callable<TaskResult> {
 
     @Override
     public TaskResult call() throws Exception {
-        Tester tester = new Tester(iProbe);
-        return tester.startTest(task);
+        TesterBruteForce testerBruteForce = new TesterBruteForce(iProbe);
+        return testerBruteForce.startTest(task);
     }
 }

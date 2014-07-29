@@ -1,7 +1,7 @@
-package client;
+package sides.client;
 
 import org.junit.Assert;
-import prober.ProbeMD5;
+import attack.prober.ProbeMD5;
 
 import java.security.MessageDigest;
 

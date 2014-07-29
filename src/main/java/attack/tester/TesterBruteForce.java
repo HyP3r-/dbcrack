@@ -1,20 +1,17 @@
-package client;
+package attack.tester;
 
-import prober.IProbe;
+import sides.client.Task;
+import sides.client.TaskResult;
+import attack.prober.IProbe;
 
 /**
  * Created by fendta on 07.07.14.
  * All exceptions where here happens were given out
  */
-public class Tester {
+public class TesterBruteForce implements ITester {
 
-    private IProbe prober;
-
-    public Tester(IProbe prober) {
-        this.prober = prober;
-    }
-
-    public TaskResult startTest(Task task) throws Exception {
+    @Override
+    public TaskResult startTest(Task task, IProbe iProbe) throws Exception {
         // TODO: this have to optimized lol
         long currentPasswordNumber;
         StringBuilder stringBuilder;
@@ -27,11 +24,12 @@ public class Tester {
                 currentPasswordNumber = currentPasswordNumber / task.getChars().length;
             }
             // then test the password
-            if (prober.probe(stringBuilder.toString(), task.getHashToFind())) {
+            if (iProbe.probe(stringBuilder.toString(), task.getHashToFind())) {
                 return new TaskResult(true, stringBuilder.toString());
             }
         }
         return new TaskResult(false);
     }
+
 
 }

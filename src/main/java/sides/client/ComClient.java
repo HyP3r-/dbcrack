@@ -1,4 +1,4 @@
-package client;
+package sides.client;
 
 import java.util.Queue;
 

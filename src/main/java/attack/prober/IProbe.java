@@ -1,4 +1,4 @@
-package prober;
+package attack.prober;
 
 /**
  * Created by fendta on 08.07.14.

@@ -1,4 +1,4 @@
-package prober;
+package attack.prober;
 
 import java.security.MessageDigest;
 import java.util.Arrays;

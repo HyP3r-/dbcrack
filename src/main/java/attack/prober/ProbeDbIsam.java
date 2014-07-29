@@ -1,4 +1,4 @@
-package prober;
+package attack.prober;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

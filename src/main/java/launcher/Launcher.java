@@ -1,6 +1,6 @@
 package launcher;
 
-import cli.CliController;
+import ui.cli.CliController;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -16,7 +16,7 @@ public class Launcher {
             properties.load(ClassLoader.getSystemResourceAsStream("settings.properties"));
             String launcher = properties.getProperty("launcher");
             switch (launcher) {
-                case "cli":
+                case "ui/cli":
                     CliController cliController = new CliController();
                     cliController.start(args);
                     break;

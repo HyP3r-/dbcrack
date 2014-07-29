@@ -1,4 +1,4 @@
-package client;
+package sides.client;
 
 /**
  * Created by fendta on 07.07.14.
