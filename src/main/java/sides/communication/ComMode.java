@@ -6,5 +6,6 @@ package sides.communication;
 public enum ComMode {
     GET_TASK,
     GET_CLASS_OF_PROBER,
-    GET_CLASS_OF_TESTER
+    GET_CLASS_OF_TESTER,
+    RETURN_TASK_RESULT
 }

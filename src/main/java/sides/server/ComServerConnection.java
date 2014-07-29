@@ -1,5 +1,6 @@
 package sides.server;
 
+import sides.communication.ComMode;
 import sides.communication.ComPackage;
 
 import java.io.*;
@@ -38,20 +39,23 @@ public class ComServerConnection implements Runnable {
                 // Get ComPackage
                 comPackage = (ComPackage) objectInputStream.readObject();
 
-                // Switch Mode
+                // Switch Mode and answer
                 switch (comPackage.getComMode()) {
                     case GET_TASK:
-
+                        objectOutputStream.writeObject(new ComPackage(ComMode.GET_TASK,
+                                comServer.getTask()));
                         break;
                     case GET_CLASS_OF_PROBER:
-
+                        objectOutputStream.writeObject(new ComPackage(ComMode.GET_CLASS_OF_PROBER,
+                                comServer.getClassOfProber()));
                         break;
                     case GET_CLASS_OF_TESTER:
-
+                        objectOutputStream.writeObject(new ComPackage(ComMode.GET_CLASS_OF_TESTER,
+                                comServer.getClassOfTester()));
                         break;
+                    case RETURN_TASK_RESULT:
+                        comServer.setTaskResult((attack.task.TaskResult) comPackage.getSubObject());
                 }
-
-
             }
         } catch (IOException | InterruptedException | ClassNotFoundException e) {
             e.printStackTrace();

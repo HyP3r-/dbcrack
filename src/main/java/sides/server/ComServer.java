@@ -3,13 +3,15 @@ package sides.server;
 import attack.prober.IProbe;
 import attack.task.Task;
 import attack.task.TaskBlock;
+import attack.task.TaskResult;
 import attack.tester.ITester;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 /**
  * Created by fendta on 28.07.14.
@@ -36,7 +38,7 @@ public class ComServer {
                     hexStringToByteArray(hash));
             this.classOfProber = (Class<? extends IProbe>) Class.forName(prober);
             this.classOfTester = (Class<? extends ITester>) Class.forName(tester);
-            this.taskBlocks = new ArrayList<>();
+            this.taskBlocks = new CopyOnWriteArrayList<>();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -66,20 +68,32 @@ public class ComServer {
         return data;
     }
 
-    public long getBlockSize() {
-        return blockSize;
-    }
+    //public long getBlockSize() {
+    //    return blockSize;
+    //}
 
-    public List<TaskBlock> getTaskBlocks() {
-        return taskBlocks;
-    }
+//    public List<TaskBlock> getTaskBlocks() {
+//        return taskBlocks;
+//    }
 
     public Class<? extends IProbe> getClassOfProber() {
         return classOfProber;
     }
 
-    public Task getMainTask() {
-        return mainTask;
+    public Class<? extends ITester> getClassOfTester() {
+        return classOfTester;
+    }
+
+//    public Task getMainTask() {
+//        return mainTask;
+//    }
+
+    public Task getTask() {
+        throw new NotImplementedException();
+    }
+
+    public void setTaskResult(TaskResult taskResult) {
+        throw new NotImplementedException();
     }
 
 }
