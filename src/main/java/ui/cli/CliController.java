@@ -19,7 +19,16 @@ public class CliController {
             // Client: -c <Hostname> <Server-IP>
             ComClient comClient = new ComClient(args[1], args[2]);
             comClient.start();
+        } else {
+            writeHelp();
         }
+    }
+
+    private void writeHelp() {
+        System.out.println("Distributed Passwort Cracker:\n" +
+                "\n" +
+                "Server: -s <Port> <Prober> <Tester> <Hash> <Chars> <Range>\n" +
+                "Client: -c <Hostname> <Server-IP>");
     }
 
 
