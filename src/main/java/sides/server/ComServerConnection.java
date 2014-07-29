@@ -42,8 +42,7 @@ public class ComServerConnection implements Runnable {
                 // Switch Mode and answer
                 switch (comPackage.getComMode()) {
                     case GET_TASK:
-                        objectOutputStream.writeObject(new ComPackage(ComMode.GET_TASK,
-                                comServer.getTask()));
+                        objectOutputStream.writeObject(new ComPackage(ComMode.GET_TASK, comServer.getTask()));
                         break;
                     case GET_CLASS_OF_PROBER:
                         objectOutputStream.writeObject(new ComPackage(ComMode.GET_CLASS_OF_PROBER,

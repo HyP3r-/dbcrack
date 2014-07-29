@@ -68,14 +68,6 @@ public class ComServer {
         return data;
     }
 
-    //public long getBlockSize() {
-    //    return blockSize;
-    //}
-
-//    public List<TaskBlock> getTaskBlocks() {
-//        return taskBlocks;
-//    }
-
     public Class<? extends IProbe> getClassOfProber() {
         return classOfProber;
     }
@@ -83,10 +75,6 @@ public class ComServer {
     public Class<? extends ITester> getClassOfTester() {
         return classOfTester;
     }
-
-//    public Task getMainTask() {
-//        return mainTask;
-//    }
 
     public Task getTask() {
         throw new NotImplementedException();
