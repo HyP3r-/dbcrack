@@ -5,6 +5,6 @@ package attack.prober;
  */
 public interface IProbe {
 
-    boolean probe(String password, byte[] hashToFind) throws Exception;
+    boolean probe(byte[] password, byte[] hashToFind) throws Exception;
 
 }

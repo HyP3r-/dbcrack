@@ -7,9 +7,9 @@ public class TaskResult {
 
     private final boolean result;
 
-    private String password;
+    private byte[] password;
 
-    public TaskResult(boolean result, String password) {
+    public TaskResult(boolean result, byte[] password) {
         this.result = result;
         this.password = password;
     }
@@ -22,7 +22,7 @@ public class TaskResult {
         return result;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 }

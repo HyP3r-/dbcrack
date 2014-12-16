@@ -24,9 +24,9 @@ public class ProbeDbIsam implements IProbe {
     }
 
     @Override
-    public boolean probe(String password, byte[] hashToFind) throws Exception {
+    public boolean probe(byte[] password, byte[] hashToFind) throws Exception {
         // First we have to create an hash of the password
-        byte[] data = messageDigest.digest(password.getBytes("UTF-8"));
+        byte[] data = messageDigest.digest(password);
 
         // Then we have to encrypt the hash with the password
         SecretKey secretkey = blowfish.generateKey();

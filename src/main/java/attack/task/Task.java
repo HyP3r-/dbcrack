@@ -9,11 +9,11 @@ public class Task {
 
     private long end;
 
-    private char[] chars;
+    private byte[] chars;
 
     private byte[] hashToFind;
 
-    public Task(long start, long end, char[] chars, byte[] hashToFind) {
+    public Task(long start, long end, byte[] chars, byte[] hashToFind) {
         this.start = start;
         this.end = end;
         this.chars = chars;
@@ -28,7 +28,7 @@ public class Task {
         return end;
     }
 
-    public char[] getChars() {
+    public byte[] getChars() {
         return chars;
     }
 

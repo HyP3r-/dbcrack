@@ -15,9 +15,9 @@ public class ProbeMD5 implements IProbe {
     }
 
     @Override
-    public boolean probe(String password, byte[] hashToFind) throws Exception {
+    public boolean probe(byte[] password, byte[] hashToFind) throws Exception {
         // First we have to create an hash of the password
-        byte[] data = messageDigest.digest(password.getBytes("UTF-8"));
+        byte[] data = messageDigest.digest(password);
 
         // After that, hashToFind and created hash should be the same
         return Arrays.equals(data, hashToFind);
