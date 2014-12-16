@@ -1,3 +1,0 @@
-#! /bin/bash
-./gradlew installApp
-./build/install/BrokerGame/bin/BrokerGame
