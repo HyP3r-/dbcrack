@@ -65,9 +65,7 @@ def probe_start(int password_start,
                 break
             password_i += 1
         # Test password
-        result = probe(password,
-                       password_i + 1,
-                       data)
+        result = probe(password, password_i + 1, data)
         # Return result
         if result == 1:
             return result, password[:password_i + 1]

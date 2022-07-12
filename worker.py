@@ -27,11 +27,11 @@ def __start_workers(m):
     return nr_of_processes
 
 
-if __name__ == '__main__':
-    TaskManager.register('get_job_queue')
-    TaskManager.register('get_result_queue')
+if __name__ == "__main__":
+    TaskManager.register("get_job_queue")
+    TaskManager.register("get_result_queue")
     m = TaskManager(address=(config.SERVER_IP, config.SERVER_PORT),
                     authkey=config.SERVER_PASSWORD)
     m.connect()
     nr_of_processes = __start_workers(m)
-    print(nr_of_processes, 'workers started')
+    print(nr_of_processes, "workers started")

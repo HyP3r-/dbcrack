@@ -5,7 +5,7 @@ Distributed Password BruteForce for DBISAM
 `dbcrack` can be configured with the file `config.py`:
 - `SERVER_IP` and `SERVER_PORT` should changed to the ip address of your server
 - extract out of the database file the password hash and set `DATA` to that
-  value. 
+  value. The password hash is at at offset `0xad` to `0xbc`
 
 ## Compilation
 To enhance the bruteforce performance `dbcrack` uses cython. To compile the

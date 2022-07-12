@@ -38,9 +38,9 @@ def __password_creator(m):
         time.sleep(0.1)
 
 
-if __name__ == '__main__':
-    TaskManager.register('get_job_queue')
-    TaskManager.register('get_result_queue')
+if __name__ == "__main__":
+    TaskManager.register("get_job_queue")
+    TaskManager.register("get_result_queue")
     m = TaskManager(address=(config.SERVER_IP, config.SERVER_PORT),
                     authkey=config.SERVER_PASSWORD)
     m.connect()

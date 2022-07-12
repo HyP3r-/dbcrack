@@ -11,10 +11,7 @@ LETTERS = [i for i in range(48, 57)]
 LETTERS = bytearray(LETTERS)
 
 pre = time.time()
-result, password = tester_dbisam.probe_start(0,
-                                             400000,
-                                             LETTERS,
-                                             DATA)
+result, password = tester_dbisam.probe_start(0, 400000, LETTERS, DATA)
 post = time.time()
 
 print(result, password, post - pre)

@@ -2,7 +2,7 @@
 RANGE_MIN = 1
 RANGE_MAX = 10
 
-# Letters for BruteForce
+# Letters and Numbers for BruteForce
 LETTERS = [i for i in range(65, 91)] + \
           [i for i in range(97, 123)] + \
           [i for i in range(48, 58)]
